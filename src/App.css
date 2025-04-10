@@ -1,3 +1,281 @@
+/* Custom CSS for CodeFr React App */
+
+/* Root variables for theme colors */
+:root {
+  --primary-color: #00458b;
+  --secondary-color: #3fd2c7;
+  --accent-color: #99ddff;
+  --text-color: #333;
+  --background-color: #fff;
+  --navbar-color: var(--primary-color);
+  --navbar-text-color: #fff;
+  --footer-color: var(--primary-color);
+  --footer-text-color: #fff;
+  --button-color: var(--secondary-color);
+  --button-text-color: #fff;
+  --link-color: var(--primary-color);
+  --link-hover-color: var(--secondary-color);
+  --card-background: #fff;
+  --card-border: #eee;
+  --dark-color: #121212;
+  --light-color: #f5f5f5;
+  --code-bg: #f8f9fa;
+  --code-border: #e9ecef;
+  --body-bg: #ffffff;
+  --card-bg: #ffffff;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --output-bg: #f5f5f5;
+}
+
+/* Dark theme variables */
+[data-theme="dark"] {
+  --primary-color: #00458b;
+  --secondary-color: #3fd2c7;
+  --accent-color: #99ddff;
+  --text-color: #f5f5f5;
+  --background-color: #121212;
+  --navbar-color: var(--primary-color);
+  --navbar-text-color: #fff;
+  --footer-color: var(--primary-color);
+  --footer-text-color: #fff;
+  --button-color: var(--secondary-color);
+  --button-text-color: #fff;
+  --link-color: var(--accent-color);
+  --link-hover-color: var(--secondary-color);
+  --card-background: #1e1e1e;
+  --card-border: #333;
+  --dark-color: #051622;
+  --light-color: #2c3e50;
+  --code-bg: #2d3748;
+  --code-border: #4a5568;
+  --body-bg: #1a202c;
+  --card-bg: #2d3748;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --output-bg: #2c3e50;
+}
+
+/* Apply theme colors to elements */
+body {
+  color: var(--text-color);
+  background-color: var(--background-color);
+  transition: all 0.3s ease;
+}
+
+a {
+  color: var(--link-color);
+}
+
+a:hover {
+  color: var(--link-hover-color);
+}
+
+.navbar.is-primary {
+  background-color: var(--navbar-color) !important;
+  color: var(--navbar-text-color);
+}
+
+.navbar.is-primary .navbar-brand .navbar-item,
+.navbar.is-primary .navbar-brand .navbar-link,
+.navbar.is-primary .navbar-item,
+.navbar.is-primary .navbar-link {
+  color: var(--navbar-text-color);
+}
+
+.navbar.is-primary .navbar-item:hover,
+.navbar.is-primary .navbar-link:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.button.is-primary {
+  background-color: var(--button-color) !important;
+  color: var(--button-text-color);
+  border-color: transparent;
+}
+
+.button.is-primary:hover {
+  background-color: var(--secondary-color) !important;
+  opacity: 0.9;
+}
+
+.hero.is-primary {
+  background-color: var(--primary-color) !important;
+  color: #fff;
+}
+
+.hero.is-secondary {
+  background-color: var(--secondary-color) !important;
+  color: #fff;
+}
+
+.hero.is-accent {
+  background-color: var(--accent-color) !important;
+  color: #333;
+}
+
+footer {
+  background-color: var(--footer-color);
+  color: var(--footer-text-color);
+  padding: 3rem 1.5rem;
+}
+
+.card {
+  background-color: var(--card-background);
+  border: 1px solid var(--card-border);
+  transition: all 0.3s ease;
+}
+
+/* Custom classes for the new theme colors */
+.has-background-primary {
+  background-color: var(--primary-color) !important;
+}
+
+.has-background-secondary {
+  background-color: var(--secondary-color) !important;
+}
+
+.has-background-accent {
+  background-color: var(--accent-color) !important;
+}
+
+.has-text-primary {
+  color: var(--primary-color) !important;
+}
+
+.has-text-secondary {
+  color: var(--secondary-color) !important;
+}
+
+.has-text-accent {
+  color: var(--accent-color) !important;
+}
+
+/* Additional styling for the sticky sidebar in documentation */
+.sticky-sidebar {
+  position: sticky;
+  top: 20px;
+}
+
+/* Menu styling */
+.menu-list a.is-active {
+  background-color: var(--primary-color);
+}
+
+.menu-list a:hover {
+  background-color: var(--accent-color);
+  color: #333;
+}
+
+/* Tab styling */
+.tabs li.is-active a {
+  border-bottom-color: var(--secondary-color);
+  color: var(--secondary-color);
+}
+
+/* Documentation specific styles */
+.documentation-page .menu-list a.is-active {
+  background-color: var(--primary-color);
+}
+
+/* Code editor container */
+.editor-container {
+  border: 1px solid var(--card-border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* Output display */
+.output {
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  color: #333;
+  font-family: monospace;
+}
+
+[data-theme="dark"] .output {
+  background-color: #2d2d2d;
+  color: #f5f5f5;
+}
+
+/* Feature cards */
+.feature-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.feature-card .card-content {
+  flex-grow: 1;
+}
+
+.feature-card .icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--secondary-color);
+}
+
+/* Download section */
+.download-option {
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.download-option:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .download-option:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Footer styling */
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-links a {
+  color: var(--footer-text-color);
+  margin-right: 1.5rem;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+  }
+  
+  .footer-links {
+    margin-bottom: 1rem;
+  }
+  
+  .footer-links a {
+    margin-right: 1rem;
+  }
+}
+
+/* Bulma Overrides */
+.button.is-dark {
+  background-color: var(--accent-color) !important;
+}
+
+/* Card Styling */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* App */
 .App {
   text-align: center;
 }

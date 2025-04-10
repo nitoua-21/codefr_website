@@ -1,0 +1,118 @@
+/* Documentation Page Styles */
+
+.documentation-page .sticky-sidebar {
+  position: sticky;
+  top: 20px;
+}
+
+.documentation-page .menu-list a {
+  border-radius: 4px;
+  padding: 8px 12px;
+}
+
+.documentation-page .menu-list a.is-active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.documentation-page .menu-list a:hover {
+  background-color: var(--accent-color);
+  color: #333;
+}
+
+.documentation-page .doc-section {
+  margin-bottom: 3rem;
+  padding-top: 1rem;
+  text-align: left;
+}
+
+.documentation-page .content {
+  text-align: left;
+}
+
+.documentation-page p, 
+.documentation-page h2, 
+.documentation-page h3, 
+.documentation-page h4, 
+.documentation-page ul, 
+.documentation-page ol {
+  text-align: left;
+}
+
+.documentation-page .doc-section:not(:first-child) {
+  border-top: 1px solid #eee;
+}
+
+.documentation-page .output {
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  color: #333;
+  font-family: monospace;
+  white-space: pre-wrap;
+  text-align: left;
+}
+
+/* Button styling */
+.documentation-page .button {
+  background-color: var(--secondary-color);
+  color: white;
+  border-color: transparent;
+}
+
+.documentation-page .button:hover {
+  background-color: var(--secondary-color);
+  opacity: 0.9;
+}
+
+/* Hero section styling */
+.documentation-page .hero.is-primary {
+  background-color: var(--primary-color);
+}
+
+/* Dark mode styles */
+[data-theme="dark"] .documentation-page .output {
+  background-color: #2d2d2d;
+  color: #f5f5f5;
+}
+
+[data-theme="dark"] .documentation-page .doc-section:not(:first-child) {
+  border-top: 1px solid #444;
+}
+
+/* Editor container styles */
+.documentation-page .editor-container {
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+[data-theme="dark"] .documentation-page .editor-container {
+  border-color: #444;
+}
+
+/* Code highlighting */
+.documentation-page code {
+  color: var(--secondary-color);
+  background-color: rgba(63, 210, 199, 0.1);
+}
+
+/* Links */
+.documentation-page a {
+  color: var(--primary-color);
+}
+
+.documentation-page a:hover {
+  color: var(--secondary-color);
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+  .documentation-page .sticky-sidebar {
+    position: relative;
+    top: 0;
+    margin-bottom: 1.5rem;
+  }
+}
