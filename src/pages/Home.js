@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import FeatureCard from '../components/FeatureCard';
 import DownloadSection from '../components/DownloadSection';
 import DocSection from '../components/DocSection';
+import About from '../components/About';
 
 const Home = () => {
   return (
@@ -68,6 +69,9 @@ Fin`,
         </div>
       </section>
 
+      {/* About Section */}
+      <About />
+
       {/* Features Section */}
       <section id="features" className="section">
         <div className="container">
@@ -103,9 +107,9 @@ Fin`,
             </div>
             <div className="column is-4">
               <FeatureCard
-                icon="fa-file-export"
-                title="Exportation de code"
-                description="Exportez votre code vers d'autres langages comme Python ou JavaScript."
+                icon="fa-chart-line"
+                title="Maîtrise des outils low-code"
+                description="CodeFr vous offre une utilisation intuitive des fonctions avancées des outils low-code tels qu'Excel, Power BI et Tableau, vous aidant ainsi à gagner en autonomie et à atteindre l'indépendance professionnelle. "
               />
             </div>
             <div className="column is-4">
