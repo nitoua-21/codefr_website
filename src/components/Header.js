@@ -46,9 +46,9 @@ const Header = () => {
         <div className={`navbar-menu ${isActive ? 'is-active' : ''}`}>
           <div className="navbar-end">
             <Link to="/" className="navbar-item">Accueil</Link>
-            <Link to="/about" className="navbar-item">À propos</Link>
+            <Link to="/#about" className="navbar-item">À propos</Link>
             <Link to="/documentation" className="navbar-item">Documentation</Link>
-            <a href="#download" className="navbar-item">Télécharger</a>
+            <a href="/#download" className="navbar-item">Télécharger</a>
             
             <div className="navbar-item">
               <button 
