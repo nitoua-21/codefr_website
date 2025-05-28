@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import DocSection from '../components/DocSection';
-import { documentationData } from '../data';
+import ReactMarkdown from 'react-markdown';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { tomorrow, oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import '../styles/Documentation.css';
+import { documentationData } from '../data/documentationData';
 
 const Documentation = () => {
   const [activeSection, setActiveSection] = useState('introduction');
@@ -9,13 +11,13 @@ const Documentation = () => {
   const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth > 768);
   const sectionRefs = useRef({});
   
-  // Register refs for each section
+  // Initialize section refs
   useEffect(() => {
     documentationData.forEach(section => {
       sectionRefs.current[section.id] = React.createRef();
     });
   }, []);
-
+  
   // Scroll to section when activeSection changes
   useEffect(() => {
     if (sectionRefs.current[activeSection] && sectionRefs.current[activeSection].current) {
@@ -91,63 +93,90 @@ const Documentation = () => {
       </section>
       
       {/* Documentation Content */}
-      <section className="section">
-        <div className="container">
-          <div className="columns">
-            {/* Sidebar Navigation */}
-            <div className="column is-3">
-              <div className="box sticky-sidebar">
-                <button 
-                  className="button is-fullwidth mb-3 is-flex is-align-items-center is-justify-content-space-between"
-                  onClick={toggleSidebar}
-                >
-                  <span>Table des matières</span>
-                  <span className="icon">
-                    <i className={`fas fa-chevron-${sidebarOpen ? 'up' : 'down'}`}></i>
-                  </span>
-                </button>
-                
-                {sidebarOpen && (
-                  <aside className="menu">
-                    <ul className="menu-list">
-                      {documentationData.map(section => (
-                        <li key={section.id}>
-                          <a 
-                            href={`#${section.id}`}
-                            className={activeSection === section.id ? 'is-active' : ''}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setActiveSection(section.id);
-                            }}
-                          >
-                            {section.title}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </aside>
-                )}
-              </div>
-            </div>
-            
-            {/* Documentation Content */}
-            <div className="column is-9">
-              <div className="box content has-text-left">
-                {documentationData.map(section => (
-                  <DocSection 
-                    key={section.id}
-                    id={section.id}
-                    title={section.title}
-                    content={section.content}
-                    ref={sectionRefs.current[section.id]}
-                    theme={theme}
-                  />
+      <div className="container mt-5">
+        <div className="columns">
+          {/* Sidebar */}
+          <div className={`column is-3 sidebar ${sidebarOpen ? 'is-open' : 'is-closed'}`}>
+            <aside className="menu">
+              <p className="menu-label">Documentation</p>
+              <ul className="menu-list">
+                {documentationData.map((section) => (
+                  <li key={section.id}>
+                    <a
+                      className={activeSection === section.id ? 'is-active' : ''}
+                      onClick={() => setActiveSection(section.id)}
+                    >
+                      {section.title}
+                    </a>
+                  </li>
                 ))}
+              </ul>
+            </aside>
+            <button 
+              className="button is-small sidebar-toggle" 
+              onClick={toggleSidebar}
+              aria-label="Toggle sidebar"
+            >
+              {sidebarOpen ? '«' : '»'}
+            </button>
+          </div>
+          
+          {/* Main Content */}
+          <div className={`column ${sidebarOpen ? 'is-9' : 'is-12'} content-area`}>
+            {documentationData.map((section) => (
+              <div 
+                key={section.id} 
+                id={section.id} 
+                ref={sectionRefs.current[section.id]}
+                className={`doc-section ${activeSection === section.id ? 'is-active' : ''}`}
+              >
+                <ReactMarkdown
+                  components={{
+                    code({node, inline, className, children, ...props}) {
+                      const match = /language-(\w+)/.exec(className || '');
+                      const language = match ? match[1] : 'text';
+                      return !inline ? (
+                        <div className="editor-container" style={{ marginBottom: '20px', border: '1px solid #ddd', borderRadius: '4px', overflow: 'hidden' }}>
+                          <SyntaxHighlighter
+                            style={theme === 'dark' ? oneDark : tomorrow}
+                            language={language}
+                            PreTag="div"
+                            {...props}
+                          >
+                            {String(children).replace(/\n$/, '')}
+                          </SyntaxHighlighter>
+                        </div>
+                      ) : (
+                        <code className={className} {...props}>
+                          {children}
+                        </code>
+                      );
+                    },
+                    table({node, className, children, ...props}) {
+                      return (
+                        <div className="table-container">
+                          <table className="table is-bordered is-striped is-hoverable is-fullwidth">
+                            {children}
+                          </table>
+                        </div>
+                      );
+                    },
+                    blockquote({node, className, children, ...props}) {
+                      return (
+                        <div className="notification is-info is-light">
+                          <blockquote {...props}>{children}</blockquote>
+                        </div>
+                      );
+                    }
+                  }}
+                >
+                  {section.markdown}
+                </ReactMarkdown>
               </div>
-            </div>
+            ))}
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 };

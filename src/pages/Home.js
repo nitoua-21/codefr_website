@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 // Components
 import FeatureCard from '../components/FeatureCard';
 import DownloadSection from '../components/DownloadSection';
-import DocSection from '../components/DocSection';
 import About from '../components/About';
 
 const Home = () => {
@@ -35,34 +34,6 @@ const Home = () => {
                     <span>Télécharger</span>
                   </a>
                 </div>
-              </div>
-              <div className="column is-6">
-                <DocSection
-                  id="codefr-examples"
-                  title=""
-                  theme="dark"
-                  content={[
-                    {
-                      type: 'code',
-                      content: `// Mon premier programme en CodeFr
-Variable age: Entier
-
-Debut
-    Ecrire("Bonjour, monde !")
-    
-    Ecrire("Quel est votre âge ? ")
-    Lire(age)
-    
-    Si age >= 18 Alors
-        Ecrire("Vous êtes majeur.")
-    Sinon
-        Ecrire("Vous êtes mineur.")
-    FinSi
-Fin`,
-                      height: '310px'
-                    }
-                  ]}
-                />
               </div>
             </div>
           </div>

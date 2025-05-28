@@ -1,5 +1,33 @@
 /* Documentation Page Styles */
 
+/* Sidebar styles */
+.documentation-page .sidebar {
+  transition: all 0.3s ease;
+  border-right: 1px solid #eee;
+  padding-right: 1.5rem;
+  position: relative;
+}
+
+.documentation-page .sidebar.is-closed {
+  display: none;
+}
+
+.documentation-page .sidebar-toggle {
+  position: absolute;
+  top: 1rem;
+  right: -1rem;
+  z-index: 10;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
 .documentation-page .sticky-sidebar {
   position: sticky;
   top: 20px;
@@ -24,6 +52,11 @@
   margin-bottom: 3rem;
   padding-top: 1rem;
   text-align: left;
+  display: none; /* Hide all sections by default */
+}
+
+.documentation-page .doc-section.is-active {
+  display: block; /* Show only active section */
 }
 
 .documentation-page .content {
@@ -108,11 +141,118 @@
   color: var(--secondary-color);
 }
 
+/* Markdown specific styles */
+.documentation-page h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
+}
+
+.documentation-page h2 {
+  font-size: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.documentation-page h3 {
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--secondary-color);
+}
+
+.documentation-page h4 {
+  font-size: 1.25rem;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: var(--secondary-color);
+}
+
+.documentation-page p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.documentation-page ul, .documentation-page ol {
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+.documentation-page li {
+  margin-bottom: 0.5rem;
+}
+
+.documentation-page blockquote {
+  border-left: 4px solid var(--primary-color);
+  padding-left: 1rem;
+  margin-left: 0;
+  color: #666;
+  font-style: italic;
+}
+
+.documentation-page img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+
+.documentation-page table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+}
+
+.documentation-page th {
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: bold;
+}
+
+.documentation-page th, .documentation-page td {
+  padding: 0.75rem;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.documentation-page tr:nth-child(even) {
+  background-color: #f8f8f8;
+}
+
+[data-theme="dark"] .documentation-page tr:nth-child(even) {
+  background-color: #333;
+}
+
+[data-theme="dark"] .documentation-page th {
+  background-color: var(--primary-color);
+}
+
+[data-theme="dark"] .documentation-page td, [data-theme="dark"] .documentation-page th {
+  border-color: #444;
+}
+
 /* Responsive styles */
 @media screen and (max-width: 768px) {
   .documentation-page .sticky-sidebar {
     position: relative;
     top: 0;
     margin-bottom: 1.5rem;
+  }
+  
+  .documentation-page h1 {
+    font-size: 2rem;
+  }
+  
+  .documentation-page h2 {
+    font-size: 1.75rem;
+  }
+  
+  .documentation-page h3 {
+    font-size: 1.5rem;
+  }
+  
+  .documentation-page h4 {
+    font-size: 1.25rem;
   }
 }
