@@ -31,6 +31,12 @@ const benefits = [
     iconColor: '#99ddff',
     title: 'Développeurs',
     description: `Créez des exercices de programmation en français, compilables et exécutables, pour des supports interactifs destinés aux élèves francophones.`
+  },
+  {
+    iconClass: 'fa-briefcase',
+    iconColor: '#00458b',
+    title: 'Professionnels',
+    description: `Maîtrisez la logique algorithmique et utilisez intuitivement les fonctions avancées d’outils low-code comme Excel, Power BI ou Tableau.`
   }
 ];
 

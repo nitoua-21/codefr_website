@@ -5,11 +5,23 @@ export const documentationData = [
     content: [
       {
         type: 'paragraph',
-        content: 'CodeFr est un langage de programmation conçu pour faciliter l\'apprentissage de l\'algorithmique et de la programmation dans les pays francophones. Il permet d\'écrire des algorithmes en utilisant des mots-clés en français, rendant la programmation plus accessible aux débutants francophones.'
+        content: `CodeFR est un langage de programmation éducatif conçu pour rendre l’apprentissage de l’algorithmique et de la programmation plus accessible aux francophones, notamment aux débutants. Il permet d’écrire des programmes en utilisant une syntaxe claire et des mots-clés exclusivement en français, éliminant ainsi l’une des principales barrières d’entrée : la langue anglaise omniprésente dans les langages classiques comme Python, C ou Java.`
       },
       {
         type: 'paragraph',
-        content: 'Ce langage sert de passerelle vers d\'autres langages de programmation en permettant aux apprenants de se concentrer sur la logique plutôt que sur la syntaxe anglaise.'
+        content: `CodeFR s’adresse à tous les apprenants : élèves, étudiants, enseignants, tuteurs, mais aussi professionnels en reconversion ou autodidactes. Il leur permet de se concentrer pleinement sur la logique algorithmique, sans être freinés par une syntaxe étrangère ou complexe.`
+      },
+      {
+        type: 'paragraph',
+        content: `Ce langage pédagogique agit comme une passerelle vers des langages plus techniques, tout en étant suffisamment complet pour développer des algorithmes avancés incluant des boucles, des fonctions, des modules, des structures de données comme les tableaux, et bien plus encore.`
+      },
+      {
+        type: 'paragraph',
+        content: `En outre, CodeFR contribue aussi à l’autonomisation des professionnels. Grâce à sa logique algorithmique claire, il favorise une meilleure compréhension des concepts fondamentaux qui sous-tendent des outils low-code comme Excel, Power BI ou Tableau, leur permettant ainsi d’utiliser ces outils de manière plus efficace, intuitive et indépendante.`
+      },
+      {
+        type: 'paragraph',
+        content: `En résumé, CodeFR vise à démocratiser la programmation en langue française, en rendant les concepts informatiques accessibles, concrets et motivants pour tous.`
       },
       {
         type: 'heading',
