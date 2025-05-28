@@ -1,10 +1,43 @@
 import React from 'react';
+import BenefitCard from './BenefitCard';
+
+const benefits = [
+  {
+    iconClass: 'fa-user-graduate',
+    iconColor: '#3fd2c7',
+    title: 'Élèves',
+    description: `Écrivez des algorithmes simples en pseudocode français et voyez votre logique s’animer, sans barrière linguistique.`
+  },
+  {
+    iconClass: 'fa-chalkboard-teacher',
+    iconColor: '#99ddff',
+    title: 'Professeurs de sciences',
+    description: `Montrez comment un pseudocode se transforme en programme réel, rendant la pensée algorithmique plus concrète.`
+  },
+  {
+    iconClass: 'fa-project-diagram',
+    iconColor: '#00458b',
+    title: 'Élèves (avancés)',
+    description: `Abordez des algorithmes complexes avec boucles et fonctions en français executez-les et admirez les résultats.`
+  },
+  {
+    iconClass: 'fa-user-cog',
+    iconColor: '#3fd2c7',
+    title: 'Tuteurs en programmation',
+    description: `Détectez et expliquez les erreurs de compilation en pseudocode français, aidez les élèves à mieux comprendre et corriger leurs fautes.`
+  },
+  {
+    iconClass: 'fa-code',
+    iconColor: '#99ddff',
+    title: 'Développeurs',
+    description: `Créez des exercices de programmation en français, compilables et exécutables, pour des supports interactifs destinés aux élèves francophones.`
+  }
+];
 
 const About = () => (
   <>
-
     {/* Main Content */}
-    <section className="section" id="about" style={{ background: '#f8fafc' }}>
+    <section className="section" id="about">
       <div className="container" style={{ maxWidth: 900 }}>
         <div className="box" style={{ borderRadius: '1.5rem', boxShadow: '0 4px 32px rgba(0,0,0,0.05)', border: '1px solid #e0f3fa' }}>
           <h1 className="title is-1" style={{ fontWeight: 800, letterSpacing: '1px' }}>À propos de CodeFR</h1>
@@ -37,46 +70,13 @@ const About = () => (
           <div className="mt-5">
             <h3 className="title is-4 has-text-centered mb-4" style={{ color: '#00458b' }}>À qui cela profite&nbsp;?</h3>
             <div className="columns is-multiline is-centered">
-              <div className="column is-6-tablet is-4-desktop">
-                <div className="card has-background-white-ter" style={{ borderRadius: '1rem', border: '1px solid #e0f3fa', minHeight: 180 }}>
-                  <div className="card-content has-text-centered">
-                    <span className="icon is-medium mb-2"><i className="fas fa-user-graduate fa-lg" style={{ color: '#3fd2c7' }}></i></span>
-                    <p><strong>Élèves</strong><br />Écrivez des algorithmes simples en pseudocode français et voyez votre logique s’animer, sans barrière linguistique.</p>
-                  </div>
+              {benefits.map((benefit, idx) => (
+                <div className="column is-6-tablet is-4-desktop" key={idx}>
+                  <BenefitCard iconClass={benefit.iconClass} iconColor={benefit.iconColor} title={benefit.title}>
+                    {benefit.description}
+                  </BenefitCard>
                 </div>
-              </div>
-              <div className="column is-6-tablet is-4-desktop">
-                <div className="card has-background-white-ter" style={{ borderRadius: '1rem', border: '1px solid #e0f3fa', minHeight: 180 }}>
-                  <div className="card-content has-text-centered">
-                    <span className="icon is-medium mb-2"><i className="fas fa-chalkboard-teacher fa-lg" style={{ color: '#99ddff' }}></i></span>
-                    <p><strong>Professeurs de sciences</strong><br />Montrez comment un pseudocode se transforme en programme réel, rendant la pensée algorithmique plus concrète.</p>
-                  </div>
-                </div>
-              </div>
-              <div className="column is-6-tablet is-4-desktop">
-                <div className="card has-background-white-ter" style={{ borderRadius: '1rem', border: '1px solid #e0f3fa', minHeight: 180 }}>
-                  <div className="card-content has-text-centered">
-                    <span className="icon is-medium mb-2"><i className="fas fa-project-diagram fa-lg" style={{ color: '#00458b' }}></i></span>
-                    <p><strong>Élèves (avancés)</strong><br />Abordez des algorithmes complexes avec boucles et fonctions en français, compilez-les et admirez les résultats.</p>
-                  </div>
-                </div>
-              </div>
-              <div className="column is-6-tablet is-4-desktop">
-                <div className="card has-background-white-ter" style={{ borderRadius: '1rem', border: '1px solid #e0f3fa', minHeight: 180 }}>
-                  <div className="card-content has-text-centered">
-                    <span className="icon is-medium mb-2"><i className="fas fa-user-cog fa-lg" style={{ color: '#3fd2c7' }}></i></span>
-                    <p><strong>Tuteurs en programmation</strong><br />Détectez et expliquez les erreurs de compilation en pseudocode français, aidez les élèves à mieux comprendre et corriger leurs fautes.</p>
-                  </div>
-                </div>
-              </div>
-              <div className="column is-6-tablet is-4-desktop">
-                <div className="card has-background-white-ter" style={{ borderRadius: '1rem', border: '1px solid #e0f3fa', minHeight: 180 }}>
-                  <div className="card-content has-text-centered">
-                    <span className="icon is-medium mb-2"><i className="fas fa-code fa-lg" style={{ color: '#99ddff' }}></i></span>
-                    <p><strong>Développeurs</strong><br />Créez des exercices de programmation en français, compilables et exécutables, pour des supports interactifs destinés aux élèves francophones.</p>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
