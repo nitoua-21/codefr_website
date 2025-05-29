@@ -1,9 +1,88 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { tomorrow, oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import '../styles/Documentation.css';
-import { documentationData } from '../data/documentationData';
+// Documentation sections metadata
+const documentationSections = [
+  { id: 'introduction', title: 'Introduction', file: 'introduction.md' },
+  { id: 'structure', title: 'Structure d\'un programme', file: 'structure.md' },
+  { id: 'control', title: 'Structures de Contrôle', file: 'control.md' }
+];
+
+const DocumentationSection = ({ section, isActive, sectionRef, theme }) => {
+  const [content, setContent] = useState('');
+
+  useEffect(() => {
+    fetch(`${process.env.PUBLIC_URL}/docs/${section.file}`)
+      .then(response => response.text())
+      .then(text => setContent(text))
+      .catch(error => console.error(`Error loading ${section.file}:`, error));
+  }, [section.file]);
+
+  return (
+    <div 
+      key={section.id} 
+      id={section.id} 
+      ref={sectionRef}
+      className={`doc-section ${isActive ? 'is-active' : ''}`}
+    >
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        components={{
+          code({node, inline, className, children, ...props}) {
+            const match = /language-(\w+)/.exec(className || '');
+            const language = match ? match[1] : 'codefr';
+            return !inline ? (
+              <div className="editor-container" style={{ marginBottom: '20px', border: '1px solid #ddd', borderRadius: '4px', overflow: 'hidden' }}>
+                <SyntaxHighlighter
+                  style={theme === 'dark' ? oneDark : tomorrow}
+                  language='codefr'
+                  PreTag="div"
+                  {...props}
+                >
+                  {String(children).replace(/\n$/, '')}
+                </SyntaxHighlighter>
+              </div>
+            ) : (
+              <code className={className} {...props}>
+                {children}
+              </code>
+            );
+          },
+          table({node, className, children, ...props}) {
+            return (
+              <div className="table-container" style={{ overflowX: 'auto', marginBottom: '1rem' }}>
+                <table className="table is-bordered is-striped is-hoverable is-fullwidth" style={{ width: '100%', borderCollapse: 'collapse' }}>
+                  {children}
+                </table>
+              </div>
+            );
+          },
+          thead({node, children, ...props}) {
+            return <thead style={{ backgroundColor: '#f5f5f5' }}>{children}</thead>;
+          },
+          th({node, children, ...props}) {
+            return <th style={{ padding: '0.75rem', borderBottom: '2px solid #dbdbdb', textAlign: 'left' }}>{children}</th>;
+          },
+          td({node, children, ...props}) {
+            return <td style={{ padding: '0.75rem', borderBottom: '1px solid #dbdbdb' }}>{children}</td>;
+          },
+          blockquote({node, className, children, ...props}) {
+            return (
+              <div className="notification is-info is-light">
+                <blockquote {...props}>{children}</blockquote>
+              </div>
+            );
+          }
+        }}
+      >
+        {content}
+      </ReactMarkdown>
+    </div>
+  );
+};
 
 const Documentation = () => {
   const [activeSection, setActiveSection] = useState('introduction');
@@ -13,11 +92,11 @@ const Documentation = () => {
   
   // Initialize section refs
   useEffect(() => {
-    documentationData.forEach(section => {
+    documentationSections.forEach(section => {
       sectionRefs.current[section.id] = React.createRef();
     });
   }, []);
-  
+
   // Scroll to section when activeSection changes
   useEffect(() => {
     if (sectionRefs.current[activeSection] && sectionRefs.current[activeSection].current) {
@@ -100,11 +179,15 @@ const Documentation = () => {
             <aside className="menu">
               <p className="menu-label">Documentation</p>
               <ul className="menu-list">
-                {documentationData.map((section) => (
+                {documentationSections.map((section) => (
                   <li key={section.id}>
                     <a
+                      href={`#${section.id}`}
                       className={activeSection === section.id ? 'is-active' : ''}
-                      onClick={() => setActiveSection(section.id)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setActiveSection(section.id);
+                      }}
                     >
                       {section.title}
                     </a>
@@ -123,56 +206,14 @@ const Documentation = () => {
           
           {/* Main Content */}
           <div className={`column ${sidebarOpen ? 'is-9' : 'is-12'} content-area`}>
-            {documentationData.map((section) => (
-              <div 
-                key={section.id} 
-                id={section.id} 
-                ref={sectionRefs.current[section.id]}
-                className={`doc-section ${activeSection === section.id ? 'is-active' : ''}`}
-              >
-                <ReactMarkdown
-                  components={{
-                    code({node, inline, className, children, ...props}) {
-                      const match = /language-(\w+)/.exec(className || '');
-                      const language = match ? match[1] : 'text';
-                      return !inline ? (
-                        <div className="editor-container" style={{ marginBottom: '20px', border: '1px solid #ddd', borderRadius: '4px', overflow: 'hidden' }}>
-                          <SyntaxHighlighter
-                            style={theme === 'dark' ? oneDark : tomorrow}
-                            language={language}
-                            PreTag="div"
-                            {...props}
-                          >
-                            {String(children).replace(/\n$/, '')}
-                          </SyntaxHighlighter>
-                        </div>
-                      ) : (
-                        <code className={className} {...props}>
-                          {children}
-                        </code>
-                      );
-                    },
-                    table({node, className, children, ...props}) {
-                      return (
-                        <div className="table-container">
-                          <table className="table is-bordered is-striped is-hoverable is-fullwidth">
-                            {children}
-                          </table>
-                        </div>
-                      );
-                    },
-                    blockquote({node, className, children, ...props}) {
-                      return (
-                        <div className="notification is-info is-light">
-                          <blockquote {...props}>{children}</blockquote>
-                        </div>
-                      );
-                    }
-                  }}
-                >
-                  {section.markdown}
-                </ReactMarkdown>
-              </div>
+            {documentationSections.map((section) => (
+              <DocumentationSection
+                key={section.id}
+                section={section}
+                isActive={activeSection === section.id}
+                sectionRef={sectionRefs.current[section.id]}
+                theme={theme}
+              />
             ))}
           </div>
         </div>
