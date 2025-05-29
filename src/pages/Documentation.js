@@ -1,15 +1,65 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { tomorrow, oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import '../styles/Documentation.css';
+import '../styles/prism-codefr.css';
+import Prism from '../utils/prism-codefr';
+import { processCodeFRContent, isCodeFRBlock } from '../utils/code-utils';
 // Documentation sections metadata
 const documentationSections = [
   { id: 'introduction', title: 'Introduction', file: 'introduction.md' },
   { id: 'structure', title: 'Structure d\'un programme', file: 'structure.md' },
   { id: 'control', title: 'Structures de Contrôle', file: 'control.md' }
 ];
+
+
+// Custom component for code blocks
+const CodeBlock = ({ inline, className, children, theme, ...props }) => {
+  const match = /language-(\w+)/.exec(className || '');
+  const language = match ? match[1] : 'codefr';
+  const preRef = useRef(null);
+  
+  // Determine if this is a CodeFR code block - moved outside conditional
+  const isCodeFR = !inline && isCodeFRBlock(language, String(children));
+  const codeLanguage = isCodeFR ? 'codefr' : (language || 'javascript');
+  
+  // Process the code to handle special characters if it's CodeFR - moved outside conditional
+  const processedCode = !inline
+    ? (isCodeFR 
+        ? processCodeFRContent(String(children).replace(/\n$/, ''))
+        : String(children).replace(/\n$/, ''))
+    : children;
+  
+  // Apply Prism highlighting after component mounts - moved to top level
+  useEffect(() => {
+    if (!inline && preRef.current) {
+      Prism.highlightElement(preRef.current);
+    }
+  }, [inline, processedCode]);
+  
+  if (!inline) {
+    return (
+      <div className={isCodeFR ? "codefr-container" : "code-container"}>
+        {isCodeFR && <div className="codefr-label">CodeFR</div>}
+        <pre 
+          ref={preRef} 
+          className={`language-${codeLanguage}`}
+          {...props}
+        >
+          <code className={`language-${codeLanguage}`}>
+            {processedCode}
+          </code>
+        </pre>
+      </div>
+    );
+  }
+  
+  return (
+    <code className={className} {...props}>
+      {children}
+    </code>
+  );
+};
 
 const DocumentationSection = ({ section, isActive, sectionRef, theme }) => {
   const [content, setContent] = useState('');
@@ -31,26 +81,7 @@ const DocumentationSection = ({ section, isActive, sectionRef, theme }) => {
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
-          code({node, inline, className, children, ...props}) {
-            const match = /language-(\w+)/.exec(className || '');
-            const language = match ? match[1] : 'codefr';
-            return !inline ? (
-              <div className="editor-container" style={{ marginBottom: '20px', border: '1px solid #ddd', borderRadius: '4px', overflow: 'hidden' }}>
-                <SyntaxHighlighter
-                  style={theme === 'dark' ? oneDark : tomorrow}
-                  language='codefr'
-                  PreTag="div"
-                  {...props}
-                >
-                  {String(children).replace(/\n$/, '')}
-                </SyntaxHighlighter>
-              </div>
-            ) : (
-              <code className={className} {...props}>
-                {children}
-              </code>
-            );
-          },
+          code: (props) => <CodeBlock {...props} theme={theme} />,
           table({node, className, children, ...props}) {
             return (
               <div className="table-container" style={{ overflowX: 'auto', marginBottom: '1rem' }}>

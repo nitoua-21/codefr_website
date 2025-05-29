@@ -1,0 +1,203 @@
+/**
+ * Custom CSS styles for CodeFR syntax highlighting with Prism.js
+ */
+
+/* CodeFR code block container */
+pre[class*="language-codefr"],
+code[class*="language-codefr"] {
+  color: #333;
+  background: #f8f9fa;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 0.9em;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+  tab-size: 4;
+  hyphens: none;
+  border-radius: 4px;
+  padding: 1em;
+  margin: 0.5em 0;
+  overflow: auto;
+  border: 1px solid #e0e0e0;
+}
+
+/* Dark theme support */
+[data-theme='dark'] pre[class*="language-codefr"],
+[data-theme='dark'] code[class*="language-codefr"] {
+  color: #f8f8f2;
+  background: #282c34;
+  border-color: #444;
+}
+
+/* CodeFR language label */
+.codefr-label {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  background-color: #e0e0e0;
+  color: #333;
+  border-bottom-left-radius: 4px;
+  font-family: monospace;
+  z-index: 1;
+}
+
+[data-theme='dark'] .codefr-label {
+  background-color: #444;
+  color: #eee;
+}
+
+/* CodeFR container with label */
+.codefr-container {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+/* Program structure keywords */
+.token.structure {
+  color: #0033cc;
+  font-weight: bold;
+}
+
+/* Variable declaration keywords */
+.token.declaration {
+  color: #0066cc;
+  font-weight: bold;
+}
+
+/* Data types */
+.token.type {
+  color: #008800;
+}
+
+/* Control structures */
+.token.control {
+  color: #cc0000;
+  font-weight: bold;
+}
+
+/* Function keywords */
+.token.function-keyword {
+  color: #6600cc;
+  font-weight: bold;
+}
+
+/* Built-in functions */
+.token.builtin {
+  color: #9900cc;
+}
+
+/* User-defined functions */
+.token.user-function {
+  color: #6600cc;
+}
+
+/* Boolean values */
+.token.boolean {
+  color: #0000ff;
+  font-weight: bold;
+}
+
+/* Operators */
+.token.operator {
+  color: #ff6600;
+}
+
+/* Comments */
+.token.comment {
+  color: #008000;
+  font-style: italic;
+}
+
+/* Strings */
+.token.string {
+  color: #dd0000;
+}
+
+/* Numbers */
+.token.number {
+  color: #0000dd;
+}
+
+/* Variables */
+.token.variable {
+  color: #7f7f7f;
+}
+
+/* Constants */
+.token.constant {
+  color: #0066cc;
+  font-weight: bold;
+}
+
+/* Punctuation */
+.token.punctuation {
+  color: #666;
+}
+
+/* Dark theme syntax highlighting */
+[data-theme='dark'] .token.structure {
+  color: #569cd6;
+}
+
+[data-theme='dark'] .token.declaration {
+  color: #4fc1ff;
+}
+
+[data-theme='dark'] .token.type {
+  color: #4ec9b0;
+}
+
+[data-theme='dark'] .token.control {
+  color: #c586c0;
+}
+
+[data-theme='dark'] .token.function-keyword {
+  color: #dcdcaa;
+  font-weight: bold;
+}
+
+[data-theme='dark'] .token.builtin {
+  color: #c586c0;
+}
+
+[data-theme='dark'] .token.user-function {
+  color: #dcdcaa;
+}
+
+[data-theme='dark'] .token.boolean {
+  color: #569cd6;
+}
+
+[data-theme='dark'] .token.operator {
+  color: #d4d4d4;
+}
+
+[data-theme='dark'] .token.comment {
+  color: #6a9955;
+}
+
+[data-theme='dark'] .token.string {
+  color: #ce9178;
+}
+
+[data-theme='dark'] .token.number {
+  color: #b5cea8;
+}
+
+[data-theme='dark'] .token.variable {
+  color: #9cdcfe;
+}
+
+[data-theme='dark'] .token.constant {
+  color: #4fc1ff;
+  font-weight: bold;
+}
+
+[data-theme='dark'] .token.punctuation {
+  color: #d4d4d4;
+}
