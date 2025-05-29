@@ -9,7 +9,15 @@ import { processCodeFRContent, isCodeFRBlock } from '../utils/code-utils';
 const documentationSections = [
   { id: 'introduction', title: 'Introduction', file: 'introduction.md' },
   { id: 'structure', title: 'Structure d\'un programme', file: 'structure.md' },
-  { id: 'control', title: 'Structures de Contrôle', file: 'control.md' }
+  { id: 'variables', title: 'Types de Données, Variables et Constantes', file: 'variables.md' },
+  { id: 'input_output', title: 'Entrées / Sorties', file: 'input_output.md' },
+  { id: 'operators', title: 'Opérateurs', file: 'operators.md' },
+  { id: 'control', title: 'Structures de Contrôle', file: 'control.md' },
+  { id: 'array', title: 'Tableaux', file: 'array.md' },
+  { id: 'functions', title: 'Fonctions', file: 'functions.md' },
+  { id: 'modules', title: 'Modules', file: 'modules.md' },
+  { id: 'comments', title: 'Commentaires', file: 'comments.md' },
+  { id: 'install_guide', title: 'Guide d\'installation et d\'utilisation', file: 'install_guide.md' }
 ];
 
 
@@ -21,7 +29,7 @@ const CodeBlock = ({ inline, className, children, theme, ...props }) => {
   
   // Determine if this is a CodeFR code block - moved outside conditional
   const isCodeFR = !inline && isCodeFRBlock(language, String(children));
-  const codeLanguage = isCodeFR ? 'codefr' : (language || 'javascript');
+  const codeLanguage = isCodeFR ? 'codefr' : (language || 'txt');
   
   // Process the code to handle special characters if it's CodeFR - moved outside conditional
   const processedCode = !inline
