@@ -58,85 +58,110 @@ code[class*="language-codefr"] {
 }
 
 /* Program structure keywords */
-.token.structure {
-  color: #0033cc;
-  font-weight: bold;
+pre.language-codefr .token.structure,
+code.language-codefr .token.structure {
+  color: #0033cc !important;
+  font-size: inherit !important;
 }
 
 /* Variable declaration keywords */
-.token.declaration {
-  color: #0066cc;
-  font-weight: bold;
+pre.language-codefr .token.declaration,
+code.language-codefr .token.declaration {
+  color: #0066cc !important;
+  font-size: inherit !important;
 }
 
 /* Data types */
-.token.type {
-  color: #008800;
+pre.language-codefr .token.type,
+code.language-codefr .token.type {
+  color: #008800 !important;
+  font-size: inherit !important;
 }
 
 /* Control structures */
-.token.control {
-  color: #cc0000;
-  font-weight: bold;
+pre.language-codefr .token.control,
+code.language-codefr .token.control {
+  color: #cc0000 !important;
+  font-size: inherit !important;
 }
 
 /* Function keywords */
-.token.function-keyword {
-  color: #6600cc;
-  font-weight: bold;
+pre.language-codefr .token.function-keyword,
+code.language-codefr .token.function-keyword {
+  color: #6600cc !important;
+  font-size: inherit !important;
 }
 
 /* Built-in functions */
-.token.builtin {
-  color: #9900cc;
+pre.language-codefr .token.builtin,
+code.language-codefr .token.builtin {
+  color: #9900cc !important;
+  font-size: inherit !important;
 }
 
 /* User-defined functions */
-.token.user-function {
-  color: #6600cc;
+pre.language-codefr .token.user-function,
+code.language-codefr .token.user-function {
+  color: #6600cc !important;
+  font-size: inherit !important;
 }
 
 /* Boolean values */
-.token.boolean {
-  color: #0000ff;
-  font-weight: bold;
+pre.language-codefr .token.boolean,
+code.language-codefr .token.boolean {
+  color: #0000ff !important;
+  font-size: inherit !important;
 }
 
 /* Operators */
-.token.operator {
-  color: #ff6600;
+pre.language-codefr .token.operator,
+code.language-codefr .token.operator {
+  color: #ff6600 !important;
+  font-size: inherit !important;
 }
 
 /* Comments */
-.token.comment {
-  color: #008000;
-  font-style: italic;
+pre.language-codefr .token.comment,
+code.language-codefr .token.comment {
+  color: #008000 !important;
+  font-style: italic !important;
+  font-size: inherit !important;
 }
 
 /* Strings */
-.token.string {
-  color: #dd0000;
+pre.language-codefr .token.string,
+code.language-codefr .token.string {
+  color: #dd0000 !important;
+  font-size: inherit !important;
 }
 
 /* Numbers */
-.token.number {
-  color: #0000dd;
+pre.language-codefr .token.number,
+code.language-codefr .token.number {
+  color: #0000dd !important;
+  font-size: inherit !important;
 }
 
 /* Variables */
-.token.variable {
-  color: #7f7f7f;
+pre.language-codefr .token.variable,
+code.language-codefr .token.variable {
+  color: #7f7f7f !important;
+  font-size: inherit !important;
 }
 
 /* Constants */
-.token.constant {
-  color: #0066cc;
-  font-weight: bold;
+pre.language-codefr .token.constant,
+code.language-codefr .token.constant {
+  color: #0066cc !important;
+  font-weight: bold !important;
+  font-size: inherit !important;
 }
 
 /* Punctuation */
-.token.punctuation {
-  color: #666;
+pre.language-codefr .token.punctuation,
+code.language-codefr .token.punctuation {
+  color: #666 !important;
+  font-size: inherit !important;
 }
 
 /* Dark theme syntax highlighting */

@@ -38,16 +38,16 @@ Prism.languages.codefr = {
     },
     {
       // Control structures
-      pattern: /\b(?:Si|Alors|Sinon|SinonSi|FinSi|Selon|Cas|FinSelon|TantQue|Faire|FinTantQue|Pour|De|A|FinPour|Interrompre|Suivant)\b/i,
+      pattern: /\b(?:Si|Alors|Sinon|SinonSi|FinSi|Selon|Cas|FinSelon|TantQue|Faire|FinTantQue|Pour|De|A|FinPour|Interrompre|Suivant)\b/,
       alias: 'control'
     },
     {
       // Function related
-      pattern: /\b(?:Fonction|FinFonction|Retourner)\b/i,
+      pattern: /\b(?:Fonction|FinFonction|Retourner)\b/,
       alias: 'function-keyword'
     }
   ],
-  'boolean': /\b(?:Vrai|Faux)\b/i,
+  'boolean': /\b(?:Vrai|Faux)\b/,
   'function': [
     {
       // Built-in functions

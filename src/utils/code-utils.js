@@ -14,7 +14,8 @@ export const processCodeFRContent = (code) => {
   if (!code) return '';
   
   // Replace literal '\n' with '\\n' to display it as text rather than executing it
-  return code.replace(/\\n/g, '\\\\n');
+  //return code.replace(/\\n/g, '\\\\n');
+  return code
 };
 
 /**
