@@ -5,6 +5,7 @@
 
 import Prism from 'prismjs';
 
+// Define the CodeFR language
 Prism.languages.codefr = {
   'comment': [
     {
@@ -38,28 +39,35 @@ Prism.languages.codefr = {
     },
     {
       // Control structures
-      pattern: /\b(?:Si|Alors|Sinon|SinonSi|FinSi|Selon|Cas|FinSelon|TantQue|Faire|FinTantQue|Pour|De|A|FinPour|Interrompre|Suivant)\b/,
+      pattern: /\b(?:Si|Alors|Sinon|SinonSi|FinSi|Selon|Cas|FinSelon|TantQue|Faire|FinTantQue|Pour|De|A|FinPour|Interrompre|Suivant)\b/i, // Added i
       alias: 'control'
     },
     {
       // Function related
-      pattern: /\b(?:Fonction|FinFonction|Retourner)\b/,
+      pattern: /\b(?:Fonction|FinFonction|Retourner)\b/i, // Added i
       alias: 'function-keyword'
     }
   ],
-  'boolean': /\b(?:Vrai|Faux)\b/,
-  'function': [
+  'boolean': /\b(?:Vrai|Faux)\b/i, // Added i
+  'function': [ // This is for function calls and built-ins
     {
       // Built-in functions
       pattern: /\b(?:Ecrire|Lire|Racine|Sin|Cos|Tan|Log|Log10|Arrondi|Abs|Ent|Alea|Longueur|Concatener|Comparer|Recherche|Copie)\b/i,
       alias: 'builtin'
     },
     {
-      // User-defined functions
-      pattern: /\b[a-z_]\w*(?=\s*\()/i,
+      // User-defined function calls
+      pattern: /\b[a-z_]\w*(?=\s*\()/i, // Matches 'funcName('
       alias: 'user-function'
     }
   ],
+  // General identifiers, matched after specific keywords and function calls
+  'constant': {
+    pattern: /\b[A-Z_][A-Z0-9_]*\b/
+  },
+  'variable': {
+    pattern: /\b[a-z_]\w*\b/i
+  },
   'operator': [
     // Logical operators
     /\b(?:Et|Ou|Non|Oux|Mod)\b/i,
@@ -117,6 +125,9 @@ Prism.languages.insertBefore('codefr', 'keyword', {
     }
   }
 });
+
+// Add codefr-direct as an alias for codefr
+Prism.languages['codefr-direct'] = Prism.languages.codefr;
 
 // Export the Prism instance with CodeFR language
 export default Prism;

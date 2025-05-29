@@ -24,12 +24,21 @@ export const processCodeFRContent = (code) => {
  * 
  * @param {string} language - The language specified in the markdown
  * @param {string} code - The code content
+ * @param {boolean} inline - Whether this is inline code
  * @returns {boolean} - Whether this should be treated as CodeFR code
  */
-export const isCodeFRBlock = (language, code) => {
+export const isCodeFRBlock = (language, code, inline) => {
+  // If language is explicitly set to codefr, always return true
   if (language === 'codefr') return true;
   
-  // If no language is specified, check for CodeFR keywords
+  // For inline code, we need special handling
+  if (inline) {
+    // Don't treat simple inline code as CodeFR
+    // Only if it contains a complete CodeFR statement or expression
+    return false;
+  }
+  
+  // If no language is specified for a code block, check for CodeFR keywords
   if (!language || language === '') {
     const codefrKeywords = [
       'Debut', 'Fin', 'Variable', 'Variables', 'Constante', 
