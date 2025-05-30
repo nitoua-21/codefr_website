@@ -197,7 +197,7 @@ const CodeBlock = ({ inline, className, children, node }) => {
   return <code className={className}>{String(children)}</code>;
 };
 
-const DocumentationSection = ({ section, isActive, sectionRef, theme }) => {
+const DocumentationSection = ({ section, isActive, sectionRef, theme, sidebarOpen }) => {
   const [content, setContent] = useState('');
   const [processedContent, setProcessedContent] = useState('');
   const sectionContentRef = useRef(null);
@@ -300,7 +300,7 @@ const DocumentationSection = ({ section, isActive, sectionRef, theme }) => {
         timers.forEach(timer => clearTimeout(timer));
       };
     }
-  }, [processedContent, isActive, theme]); // Re-run when content, activity, or theme changes
+  }, [processedContent, isActive, theme, sidebarOpen]); // Re-run when content, activity, or theme changes
 
   return (
     <div 
@@ -597,6 +597,7 @@ const Documentation = () => {
                 isActive={activeSection === section.id}
                 sectionRef={sectionRefs.current[section.id]}
                 theme={theme}
+                sidebarOpen={sidebarOpen}
               />
             ))}
           </div>
