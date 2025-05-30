@@ -1,10 +1,31 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 
 // Components
 import FeatureCard from '../components/FeatureCard';
 import DownloadSection from '../components/DownloadSection';
 import About from '../components/About';
+
+const markdowncontent =  `
+// Mon premier programme en CodeFr
+Variable age: Entier
+
+Debut
+    Ecrire("Bonjour, monde !")
+    
+    Ecrire("Quel est votre âge ? ")
+    Lire(age)
+    
+    Si age >= 18 Alors
+        Ecrire("Vous êtes majeur.")
+    Sinon
+        Ecrire("Vous êtes mineur.")
+    FinSi
+Fin
+`
 
 const Home = () => {
   return (
@@ -34,6 +55,9 @@ const Home = () => {
                     <span>Télécharger</span>
                   </a>
                 </div>
+              </div>
+              <div className="column is-6">
+                <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>{markdowncontent}</ReactMarkdown>
               </div>
             </div>
           </div>
