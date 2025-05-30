@@ -122,11 +122,15 @@
   }
 }
 
+.documentation-page .columns {
+  position: relative; /* For absolute positioning of the toggle button */
+}
+
 .sidebar-toggle {
-  position: absolute;
-  right: -15px;
-  top: 10px;
-  z-index: 40;
+  position: absolute; /* Changed from fixed */
+  top: 10px;          /* Position from top of .columns parent */
+  /* left property is set by JavaScript */
+  z-index: 40;        /* z-index relative to stacking context of .columns */
   border-radius: 50%;
   width: 30px;
   height: 30px;
@@ -141,17 +145,16 @@
   cursor: pointer;
 }
 
+/* Desktop specific styles for sidebar-toggle might need review or removal 
+   if the button is always fixed or hidden on desktop. 
+   For now, removing the override to let fixed positioning apply. 
 @media screen and (min-width: 769px) {
   .documentation-page .sidebar-toggle {
-    position: absolute;
-    top: 1rem;
-    right: -1rem;
-    bottom: auto;
-    width: 2rem;
-    height: 2rem;
-    font-size: 1rem;
+    // Desktop specific adjustments if needed, e.g., hide if sidebar is always visible
+    // display: none; // Example: if not needed on desktop
   }
-}
+} 
+*/
 
 .documentation-page .sticky-sidebar {
   position: sticky;

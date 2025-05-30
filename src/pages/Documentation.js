@@ -432,6 +432,7 @@ const Documentation = () => {
   const [activeSection, setActiveSection] = useState('introduction');
   const [theme, setTheme] = useState('light');
   const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth > 768);
+  const toggleButtonRef = useRef(null);
   const sectionRefs = useRef({});
   
   // Initialize section refs
@@ -501,6 +502,46 @@ const Documentation = () => {
     // Cleanup function to reset body scroll on component unmount
     return () => {
       document.body.style.overflow = '';
+    }
+  }, [sidebarOpen]); // Re-run when sidebarOpen changes
+
+  // Effect to dynamically position the toggle button
+  useEffect(() => {
+    const button = toggleButtonRef.current;
+    if (!button) return;
+
+    const updateButtonPosition = () => {
+      const isMobile = window.innerWidth <= 768;
+      if (isMobile) {
+        if (sidebarOpen) {
+          const sidebarWidth = Math.min(window.innerWidth * 0.85, 320); // Mobile sidebar width
+          button.style.left = `${sidebarWidth + 10}px`; // 10px to the right of sidebar
+        } else {
+          button.style.left = '15px'; // Near left edge when closed
+        }
+      } else {
+        // Desktop positioning
+        if (sidebarOpen) {
+          // Assuming sidebar takes up roughly 25% of viewport width (adjust if container is not full width)
+          // This is an approximation. A more precise calculation might involve getting .container's offset and width.
+          // For instance, if the .container has a max-width and is centered.
+          // Let's use a value that likely places it right of a typical desktop sidebar.
+          // Example: If container is 1152px (Bulma default for $desktop), 25% is 288px.
+          // We need to calculate based on actual container, or use a simpler approach.
+          // For now, let's use a calc value that might work for a common desktop layout.
+          // A more robust way would be to get the actual sidebar column's getBoundingClientRect().right.
+          button.style.left = `calc(${document.querySelector('.sidebar.column.is-3')?.offsetWidth || (window.innerWidth * 0.25)}px + 15px)`;
+        } else {
+          button.style.left = '15px'; // Near left edge when closed
+        }
+      }
+    };
+
+    updateButtonPosition(); // Initial position update
+
+    window.addEventListener('resize', updateButtonPosition);
+    return () => {
+      window.removeEventListener('resize', updateButtonPosition);
     };
   }, [sidebarOpen]); // Re-run when sidebarOpen changes
 
@@ -558,6 +599,15 @@ const Documentation = () => {
       {/* Documentation Content */}
       <div className="container mt-5">
         <div className="columns">
+          {/* Sidebar Toggle Button - New Position */}
+          <button 
+            ref={toggleButtonRef} 
+            className="button is-small sidebar-toggle"
+            onClick={toggleSidebar}
+            aria-label="Toggle sidebar"
+          >
+            {sidebarOpen ? '«' : '»'}
+          </button>
           {/* Sidebar */}
           <div className={`column is-3 sidebar ${sidebarOpen ? 'is-open' : 'is-closed'}`}>
             <aside className="menu">
@@ -579,13 +629,6 @@ const Documentation = () => {
                 ))}
               </ul>
             </aside>
-            <button 
-              className="button is-small sidebar-toggle" 
-              onClick={toggleSidebar}
-              aria-label="Toggle sidebar"
-            >
-              {sidebarOpen ? '«' : '»'}
-            </button>
           </div>
           
           {/* Main Content */}
