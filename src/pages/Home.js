@@ -8,8 +8,9 @@ import rehypeRaw from 'rehype-raw';
 import FeatureCard from '../components/FeatureCard';
 import DownloadSection from '../components/DownloadSection';
 import About from '../components/About';
+import { markdownComponents } from '../components/MarkdownComponents.js';
 
-const markdowncontent =  `
+const markdowncontent = `\`\`\`codefr
 // Mon premier programme en CodeFr
 Variable age: Entier
 
@@ -25,7 +26,7 @@ Debut
         Ecrire("Vous êtes mineur.")
     FinSi
 Fin
-`
+\`\`\``
 
 const Home = () => {
   return (
@@ -56,8 +57,8 @@ const Home = () => {
                   </a>
                 </div>
               </div>
-              <div className="column is-6">
-                <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>{markdowncontent}</ReactMarkdown>
+              <div className="column is-6 has-text-left">
+                <ReactMarkdown components={markdownComponents} remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>{markdowncontent}</ReactMarkdown>
               </div>
             </div>
           </div>

@@ -1,5 +1,5 @@
 /**
- * Custom CSS styles for CodeFR syntax highlighting with Prism.js
+ * Custom CSS styles for CodeFR syntax highlighting
  */
 
 /* Reset token styling for syntax highlighting */
@@ -14,36 +14,6 @@ code.language-codefr-direct .token {
   margin: 0 !important;
   box-shadow: none !important;
   display: inline !important;
-}
-
-/* CodeFR code block container */
-pre[class*="language-codefr"],
-code[class*="language-codefr"] {
-  color: #333;
-  background: #f8f9fa;
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  font-size: 0.9em;
-  text-align: left;
-  white-space: pre;
-  word-spacing: normal;
-  word-break: normal;
-  word-wrap: normal;
-  line-height: 1.5;
-  tab-size: 4;
-  hyphens: none;
-  border-radius: 4px;
-  padding: 1em;
-  margin: 0.5em 0;
-  overflow: auto;
-  border: 1px solid #e0e0e0;
-}
-
-/* Dark theme support */
-[data-theme='dark'] pre[class*="language-codefr"],
-[data-theme='dark'] code[class*="language-codefr"] {
-  color: #f8f8f2;
-  background: #282c34;
-  border-color: #444;
 }
 
 /* CodeFR language label */
@@ -139,6 +109,7 @@ code.language-codefr .token.control,
 pre.language-codefr-direct .token.control,
 code.language-codefr-direct .token.control {
   color: #cc0000 !important;
+  font-size: inherit !important;
 }
 
 /* Function keywords */
