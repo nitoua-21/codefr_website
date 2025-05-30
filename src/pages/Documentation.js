@@ -4,7 +4,6 @@ import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import '../styles/Documentation.css';
 //import '../styles/prism-codefr.css';
-import '../styles/CodeFRSyntax.css';
 import '../styles/inline-code.css';
 import Prism from '../utils/prism-codefr';
 import { processCodeFRContent } from '../utils/code-utils';

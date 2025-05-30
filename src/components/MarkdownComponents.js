@@ -12,10 +12,13 @@ export const CodeFRBlockContent = ({ children }) => {
       if (codeRef.current && Prism.languages.codefr) {
         try {
           const codeToHighlight = rawCode.replace(/\n$/, '');
+          
           const highlightedHtml = Prism.highlight(codeToHighlight, Prism.languages.codefr, 'codefr');
+          
           codeRef.current.innerHTML = highlightedHtml;
           
           if (codeRef.current.querySelectorAll('.token').length === 0 && codeToHighlight.length > 0) {
+            
             const lines = codeToHighlight.split('\n');
             const formattedHtml = lines.map(line => {
               return line
@@ -24,22 +27,17 @@ export const CodeFRBlockContent = ({ children }) => {
                 .replace(/(\b\d+\b)/g, '<span class="token number">$1</span>');
             }).join('<br>');
             codeRef.current.innerHTML = formattedHtml;
+          } else {
+            // Prism.highlight produced tokens, or no fallback was needed.
           }
         } catch (error) {
           console.error('Error highlighting CodeFR code:', error);
-          codeRef.current.textContent = rawCode;
+          codeRef.current.textContent = rawCode; // Fallback to raw code on error
         }
       }
     };
+    // Call applyHighlighting directly without timeouts for now
     applyHighlighting();
-    const timers = [
-      setTimeout(applyHighlighting, 100),
-      setTimeout(applyHighlighting, 500),
-      setTimeout(applyHighlighting, 1000)
-    ];
-    return () => {
-      timers.forEach(timer => clearTimeout(timer));
-    };
   }, [rawCode]);
 
   return <code ref={codeRef} className="language-codefr">{rawCode}</code>;
@@ -87,26 +85,44 @@ export const StandardBlock = ({ language, children }) => {
 
 // Custom 'pre' renderer for ReactMarkdown
 export const PreRenderer = (props) => {
-  const { node, children, ...rest } = props;
-  if (!children || !children[0] || typeof children[0] !== 'string') {
-    // If children are not what we expect (e.g., already complex elements), render as is or a fallback.
-    // This can happen if markdown is nested or contains HTML.
-    return <pre {...rest}>{children}</pre>;
+  // props.children is the <code> element passed by ReactMarkdown
+  const { node, children: codeElement, ...rest } = props;
+
+  
+
+  // Check if codeElement is a valid React element with props
+  if (!codeElement || typeof codeElement !== 'object' || !codeElement.props) {
+    
+    // Render the original children (codeElement) inside the pre if it's somewhat renderable, or just rest if not.
+    return <pre {...rest}>{codeElement || null}</pre>;
   }
 
-  const codeBlock = children[0];
-  const languageMatch = codeBlock.props.className && codeBlock.props.className.match(/language-(\S+)/);
+  
+  
+  const className = codeElement.props.className;
+  
+
+  const languageMatch = typeof className === 'string' && className.match(/language-(\S+)/);
   const language = languageMatch ? languageMatch[1] : null;
-  const codeContent = codeBlock.props.children;
+  
+
+  const codeContentFromInnerProps = codeElement.props.children;
+  // Ensure codeContent is a string. ReactMarkdown might pass an array if there are inline elements within the code string (rare for fenced blocks).
+  const codeContent = Array.isArray(codeContentFromInnerProps) ? codeContentFromInnerProps.join('') : String(codeContentFromInnerProps || '');
+  
 
   if (language === 'codefr' || language === 'codefr-direct') {
-    return <CodeFRBlock>{String(codeContent || '')}</CodeFRBlock>;
+    
+    return <CodeFRBlock>{codeContent}</CodeFRBlock>;
   }
   if (language) {
-    return <StandardBlock language={language}>{String(codeContent || '')}</StandardBlock>;
+    
+    return <StandardBlock language={language}>{codeContent}</StandardBlock>;
   }
-  // Fallback for code blocks without a specified language or if it's not 'codefr'
-  return <pre {...rest}>{children}</pre>;
+  
+  
+  // In this fallback, we render the original codeElement (which is the <code> tag and its content) inside our <pre>
+  return <pre {...rest}>{codeElement}</pre>; 
 };
 
 export const markdownComponents = {
