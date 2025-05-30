@@ -6,26 +6,146 @@
   border-right: 1px solid #eee;
   padding-right: 1.5rem;
   position: relative;
+  height: 100%;
 }
 
-.documentation-page .sidebar.is-closed {
+/* Mobile sidebar overlay */
+.sidebar-overlay {
   display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 20;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.documentation-page .sidebar-toggle {
+.sidebar-overlay.is-active {
+  display: block;
+  opacity: 1;
+}
+
+/* Mobile sidebar styles */
+@media screen and (max-width: 768px) {
+  .documentation-page .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 85%;
+    max-width: 320px;
+    background-color: white;
+    z-index: 30;
+    padding: 1.5rem;
+    transform: translateX(-100%);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+  }
+
+  [data-theme="dark"] .documentation-page .sidebar {
+    background-color: #121212;
+  }
+
+  .documentation-page .sidebar.is-open {
+    transform: translateX(0);
+  }
+
+  .documentation-page .sidebar.is-closed {
+    transform: translateX(-100%);
+  }
+}
+
+/* Desktop sidebar styles */
+@media screen and (min-width: 769px) {
+  .documentation-page .sidebar.is-closed {
+    display: none;
+  }
+}
+
+.documentation-page {
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Sidebar Overlay */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 20;
+  cursor: pointer;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 30;
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar.is-open {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 80%;
+    max-width: 300px;
+    background-color: white;
+    overflow-y: auto;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+  }
+  
+  .sidebar.is-closed {
+    transform: translateX(-100%);
+    position: fixed;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .sidebar.is-closed {
+    margin-left: -25%;
+    display: none;
+  }
+}
+
+.sidebar-toggle {
   position: absolute;
-  top: 1rem;
-  right: -1rem;
-  z-index: 10;
+  right: -15px;
+  top: 10px;
+  z-index: 40;
   border-radius: 50%;
-  width: 2rem;
-  height: 2rem;
-  padding: 0;
+  width: 30px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  font-size: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  background-color: var(--primary-color);
+  color: white;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 769px) {
+  .documentation-page .sidebar-toggle {
+    position: absolute;
+    top: 1rem;
+    right: -1rem;
+    bottom: auto;
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
+  }
 }
 
 .documentation-page .sticky-sidebar {
@@ -33,19 +153,55 @@
   top: 20px;
 }
 
+/* Menu list styles */
+.documentation-page .menu-label {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--secondary-color);
+}
+
+.documentation-page .menu-list {
+  margin-bottom: 2rem;
+}
+
+.documentation-page .menu-list li {
+  margin-bottom: 0.25rem;
+}
+
 .documentation-page .menu-list a {
   border-radius: 4px;
-  padding: 8px 12px;
+  padding: 12px 16px;
+  font-size: 1rem;
+  display: block;
+  transition: all 0.2s ease;
 }
 
 .documentation-page .menu-list a.is-active {
   background-color: var(--primary-color);
   color: white;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .documentation-page .menu-list a:hover {
   background-color: var(--accent-color);
   color: #333;
+  transform: translateX(4px);
+}
+
+/* Mobile-specific menu styles */
+@media screen and (max-width: 768px) {
+  .documentation-page .menu-list a {
+    padding: 14px 16px;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+  }
+  
+  .documentation-page .menu-label {
+    font-size: 1.1rem;
+    margin: 1rem 0;
+  }
 }
 
 .documentation-page .doc-section {

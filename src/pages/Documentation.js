@@ -34,45 +34,52 @@ const CodeFRBlockContent = ({ children }) => {
   // Always convert to string and trim to ensure consistent formatting
   const rawCode = String(children || '').trim();
 
-  // No debug logging needed
-
   useEffect(() => {
-    if (codeRef.current && Prism.languages.codefr) {
-      try {
-        // Prism typically expects the code string without a final trailing newline for .highlight()
-        const codeToHighlight = rawCode.replace(/\n$/, '');
-        
-        // Apply Prism.js highlighting
-        const highlightedHtml = Prism.highlight(codeToHighlight, Prism.languages.codefr, 'codefr');
-        codeRef.current.innerHTML = highlightedHtml;
-        
-        // Ensure the token classes are properly applied
-        setTimeout(() => {
-          // If there are no tokens, manually apply token classes
+    // Function to apply highlighting
+    const applyHighlighting = () => {
+      if (codeRef.current && Prism.languages.codefr) {
+        try {
+          // Prism typically expects the code string without a final trailing newline for .highlight()
+          const codeToHighlight = rawCode.replace(/\n$/, '');
+          
+          // Apply Prism.js highlighting
+          const highlightedHtml = Prism.highlight(codeToHighlight, Prism.languages.codefr, 'codefr');
+          codeRef.current.innerHTML = highlightedHtml;
+          
+          // If there are no tokens, manually apply basic formatting
           if (codeRef.current.querySelectorAll('.token').length === 0) {
-            // Force re-highlighting
-            codeRef.current.innerHTML = Prism.highlight(codeToHighlight, Prism.languages.codefr, 'codefr');
-            
-            // If still no tokens, manually apply basic formatting
-            if (codeRef.current.querySelectorAll('.token').length === 0) {
-              const lines = codeToHighlight.split('\n');
-              const formattedHtml = lines.map(line => {
-                // Apply basic keyword highlighting
-                return line
-                  .replace(/(Variable|Constante|Tableau|Debut|Fin|Pour|Si|Sinon|Alors|Tantque|Repeter)/g, '<span class="token keyword">$1</span>')
-                  .replace(/(".+?")/g, '<span class="token string">$1</span>')
-                  .replace(/(\b\d+\b)/g, '<span class="token number">$1</span>');
-              }).join('<br>');
-              codeRef.current.innerHTML = formattedHtml;
-            }
+            const lines = codeToHighlight.split('\n');
+            const formattedHtml = lines.map(line => {
+              // Apply basic keyword highlighting
+              return line
+                .replace(/(Variable|Constante|Tableau|Debut|Fin|Pour|Si|Sinon|Alors|Tantque|Repeter)/gi, '<span class="token keyword">$1</span>')
+                .replace(/(".+?")/g, '<span class="token string">$1</span>')
+                .replace(/(\b\d+\b)/g, '<span class="token number">$1</span>');
+            }).join('<br>');
+            codeRef.current.innerHTML = formattedHtml;
           }
-        }, 0);
-      } catch (error) {
-        console.error('Error highlighting CodeFR code:', error);
-        // Fallback to displaying the raw content
-        codeRef.current.textContent = rawCode;
+        } catch (error) {
+          console.error('Error highlighting CodeFR code:', error);
+          // Fallback to displaying the raw content
+          codeRef.current.textContent = rawCode;
+        }
       }
-    }
+    };
+
+    // Apply highlighting immediately
+    applyHighlighting();
+    
+    // Apply highlighting multiple times with increasing delays to ensure it works
+    // This helps when Prism.js is loaded asynchronously or when content is initially hidden
+    const timers = [
+      setTimeout(applyHighlighting, 100),
+      setTimeout(applyHighlighting, 500),
+      setTimeout(applyHighlighting, 1000)
+    ];
+    
+    return () => {
+      timers.forEach(timer => clearTimeout(timer));
+    };
   }, [rawCode]); // Re-run effect if the raw code changes
 
   // The <code> tag is initially rendered empty by React.
@@ -90,7 +97,7 @@ const CodeFRBlock = ({ children }) => {
     <div className="codefr-container">
       <span className="codefr-label">CodeFR</span>
       <pre className="language-codefr">
-        <CodeFRBlockContent>{codeContent}</CodeFRBlockContent>
+        <CodeFRBlockContent key={codeContent}>{codeContent}</CodeFRBlockContent>
       </pre>
     </div>
   );
@@ -217,25 +224,83 @@ const DocumentationSection = ({ section, isActive, sectionRef, theme }) => {
       .catch(error => console.error(`Error loading ${section.file}:`, error));
   }, [section.file]);
 
-  // Apply Prism.js highlighting to all CodeFR code blocks after rendering
+  // Apply syntax highlighting to CodeFR blocks when content is loaded or section becomes active
   useEffect(() => {
-    if (sectionContentRef.current && processedContent) {
-      // Find all CodeFR code blocks in the rendered content
-      const codefrBlocks = sectionContentRef.current.querySelectorAll('code.language-codefr');
-      
-      // Apply Prism.js highlighting to each block
-      codefrBlocks.forEach(codeBlock => {
-        if (codeBlock && !codeBlock.classList.contains('prism-highlighted')) {
-          const codeText = codeBlock.textContent;
-          if (codeText && Prism.languages.codefr) {
-            const highlightedHtml = Prism.highlight(codeText, Prism.languages.codefr, 'codefr');
-            codeBlock.innerHTML = highlightedHtml;
-            codeBlock.classList.add('prism-highlighted'); // Mark as highlighted to avoid re-processing
+    // Function to apply highlighting to all CodeFR blocks in the section
+    const applyHighlighting = () => {
+      if (sectionContentRef.current) {
+        const codeBlocks = sectionContentRef.current.querySelectorAll('pre > code[class*="language-"]');
+        codeBlocks.forEach(codeBlock => {
+          const codeText = codeBlock.textContent || ''; // Ensure textContent is not null
+          const languageClass = Array.from(codeBlock.classList).find(cls => cls.startsWith('language-'));
+          const language = languageClass ? languageClass.substring('language-'.length) : null;
+
+          if (!language) return; // Skip if no language class found
+
+          try {
+            let highlightedHtml;
+            if (Prism.languages[language]) {
+              highlightedHtml = Prism.highlight(codeText, Prism.languages[language], language);
+              codeBlock.innerHTML = highlightedHtml;
+            } else if (language === 'codefr') {
+              // Fallback for CodeFR if Prism.languages.codefr is not (yet) available or failed
+              // This is the basic keyword highlighting from CodeFRBlockContent
+              const lines = codeText.split('\n');
+              highlightedHtml = lines.map(line => {
+                return line
+                  .replace(/(Variable|Constante|Tableau|Debut|Fin|Pour|Si|Sinon|Alors|Tantque|Repeter)/gi,
+                    '<span class="token keyword">$1</span>')
+                  .replace(/(".+?")/g, '<span class="token string">$1</span>')
+                  .replace(/(\b\d+\b)/g, '<span class="token number">$1</span>');
+              }).join('<br>');
+              codeBlock.innerHTML = highlightedHtml;
+            } else {
+              // For other unknown languages, display raw text
+              codeBlock.textContent = codeText;
+              return; // Skip adding prism-highlighted class
+            }
+
+            // Check if CodeFR highlighting (Prism or fallback) produced no tokens, then apply basic again
+            // This is a safety net specifically for CodeFR if Prism tokenization was weak
+            if (language === 'codefr' && codeBlock.querySelectorAll('.token').length === 0 && codeText.length > 0) {
+              const lines = codeText.split('\n');
+              const fallbackHtml = lines.map(line => {
+                return line
+                  .replace(/(Variable|Constante|Tableau|Debut|Fin|Pour|Si|Sinon|Alors|Tantque|Repeter)/gi,
+                    '<span class="token keyword">$1</span>')
+                  .replace(/(".+?")/g, '<span class="token string">$1</span>')
+                  .replace(/(\b\d+\b)/g, '<span class="token number">$1</span>');
+              }).join('<br>');
+              if (codeBlock.innerHTML !== fallbackHtml) { // Avoid infinite loop if fallback is the same
+                 codeBlock.innerHTML = fallbackHtml;
+              }
+            }
+            codeBlock.classList.add('prism-highlighted'); // Mark as highlighted
+          } catch (error) {
+            console.error(`Error highlighting block (language: ${language}):`, error);
+            codeBlock.textContent = codeText; // Fallback to raw text on error
           }
-        }
-      });
+        });
+      }
+    };
+
+    // Apply highlighting when section becomes active or content changes
+    if (isActive && processedContent) {
+      // Apply highlighting immediately
+      applyHighlighting();
+      
+      // Also apply with delays to ensure it works with async loading
+      const timers = [
+        setTimeout(applyHighlighting, 100),
+        setTimeout(applyHighlighting, 500),
+        setTimeout(applyHighlighting, 1000)
+      ];
+      
+      return () => {
+        timers.forEach(timer => clearTimeout(timer));
+      };
     }
-  }, [processedContent, isActive]); // Re-run when content changes or section becomes active
+  }, [processedContent, isActive, theme]); // Re-run when content, activity, or theme changes
 
   return (
     <div 
@@ -420,24 +485,64 @@ const Documentation = () => {
     };
   }, []);
 
-  // Handle window resize for sidebar
+  // Effect to handle body scroll based on sidebar state and screen width
+  useEffect(() => {
+    const isMobile = window.innerWidth <= 768;
+    if (isMobile) {
+      if (sidebarOpen) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    } else {
+      // Always ensure scroll is enabled on desktop
+      document.body.style.overflow = '';
+    }
+    // Cleanup function to reset body scroll on component unmount
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [sidebarOpen]); // Re-run when sidebarOpen changes
+
+  // Handle window resize for sidebar default state
   useEffect(() => {
     const handleResize = () => {
       setSidebarOpen(window.innerWidth > 768);
     };
-    
     window.addEventListener('resize', handleResize);
+    handleResize(); // Set initial state based on current window size
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, []); // Empty dependency array: runs only on mount and unmount
 
   const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
+    const newSidebarState = !sidebarOpen;
+    setSidebarOpen(newSidebarState);
+    
+    if (window.innerWidth <= 768) {
+      document.body.style.overflow = newSidebarState ? 'hidden' : '';
+    }
+  };
+  
+  // Close sidebar when clicking on a menu item on mobile
+  const handleMenuItemClick = (sectionId) => {
+    setActiveSection(sectionId);
+    
+    // Auto-close sidebar on mobile when clicking a menu item
+    if (window.innerWidth <= 768) {
+      setSidebarOpen(false);
+      document.body.style.overflow = '';
+    }
   };
 
   return (
     <div className="documentation-page">
+      {/* Overlay for mobile when sidebar is open */}
+      {sidebarOpen && window.innerWidth <= 768 && (
+        <div className="sidebar-overlay" onClick={toggleSidebar}></div>
+      )}
+      
       {/* Documentation Header */}
       <section className="hero is-primary">
         <div className="hero-body">
@@ -465,7 +570,7 @@ const Documentation = () => {
                       className={activeSection === section.id ? 'is-active' : ''}
                       onClick={(e) => {
                         e.preventDefault();
-                        setActiveSection(section.id);
+                        handleMenuItemClick(section.id);
                       }}
                     >
                       {section.title}

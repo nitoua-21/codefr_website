@@ -3,8 +3,8 @@
  */
 
 /* Basic inline code styling */
-code.doc-inline-code,
-code:not([class*="language-"]) {
+.documentation-page code.doc-inline-code,
+.documentation-page code:not([class*="language-"]) {
     background-color: #f5f5f5;
     border-radius: 3px;
     font-family: monospace;
@@ -18,11 +18,11 @@ code:not([class*="language-"]) {
 }
 
 /* Wrapper for inline code that was incorrectly wrapped in pre tags */
-.inline-code-wrapper {
+.documentation-page .inline-code-wrapper {
     display: inline;
 }
 
-.inline-code-wrapper code {
+.documentation-page .inline-code-wrapper code {
     background-color: #f5f5f5;
     border-radius: 3px;
     font-family: monospace;
@@ -36,9 +36,9 @@ code:not([class*="language-"]) {
 }
 
 /* Dark theme support */
-[data-theme='dark'] code.doc-inline-code,
-[data-theme='dark'] code:not([class*="language-"]),
-[data-theme='dark'] .inline-code-wrapper code {
+.documentation-page [data-theme='dark'] code.doc-inline-code,
+.documentation-page [data-theme='dark'] code:not([class*="language-"]),
+.documentation-page [data-theme='dark'] .inline-code-wrapper code {
     background-color: #2d2d2d;
     color: #ff79c6;
 }
