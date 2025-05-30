@@ -56,6 +56,11 @@
   .documentation-page .sidebar.is-closed {
     transform: translateX(-100%);
   }
+
+  .documentation-page .content-area {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 
 /* Desktop sidebar styles */
