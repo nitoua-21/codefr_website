@@ -39,25 +39,25 @@ Prism.languages.codefr = {
     },
     {
       // Control structures
-      pattern: /\b(?:Si|Alors|Sinon|SinonSi|FinSi|Selon|Cas|FinSelon|TantQue|Faire|FinTantQue|Pour|De|A|FinPour|Interrompre|Suivant)\b/i, // Added i
+      pattern: /\b(?:Si|Alors|Sinon|SinonSi|FinSi|Selon|Cas|FinSelon|TantQue|Faire|FinTantQue|Pour|De|A|FinPour|Interrompre|Suivant)\b/, // Added i
       alias: 'control'
     },
     {
       // Function related
-      pattern: /\b(?:Fonction|FinFonction|Retourner)\b/i, // Added i
+      pattern: /\b(?:Fonction|FinFonction|Retourner)\b/,
       alias: 'function-keyword'
     }
   ],
-  'boolean': /\b(?:Vrai|Faux)\b/i, // Added i
+  'boolean': /\b(?:Vrai|Faux)\b/,
   'function': [ // This is for function calls and built-ins
     {
       // Built-in functions
-      pattern: /\b(?:Ecrire|Lire|Racine|Sin|Cos|Tan|Log|Log10|Arrondi|Abs|Ent|Alea|Longueur|Concatener|Comparer|Recherche|Copie)\b/i,
+      pattern: /\b(?:Ecrire|Lire|Racine|Sin|Cos|Tan|Log|Log10|Arrondi|Abs|Ent|Alea|Longueur|Concatener|Comparer|Recherche|Copie)\b/,
       alias: 'builtin'
     },
     {
       // User-defined function calls
-      pattern: /\b[a-z_]\w*(?=\s*\()/i, // Matches 'funcName('
+      pattern: /\b[a-z_]\w*(?=\s*\()/,
       alias: 'user-function'
     }
   ],

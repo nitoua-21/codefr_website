@@ -126,11 +126,6 @@
   border-color: #444;
 }
 
-/* Code highlighting */
-.documentation-page code {
-  color: var(--secondary-color);
-  background-color: rgba(63, 210, 199, 0.1);
-}
 
 /* Links */
 .documentation-page a {

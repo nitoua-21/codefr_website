@@ -3,7 +3,8 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import '../styles/Documentation.css';
-import '../styles/prism-codefr.css';
+//import '../styles/prism-codefr.css';
+import '../styles/CodeFRSyntax.css';
 import '../styles/inline-code.css';
 import Prism from '../utils/prism-codefr';
 import { processCodeFRContent } from '../utils/code-utils';
@@ -308,9 +309,10 @@ const DocumentationSection = ({ section, isActive, sectionRef, theme }) => {
               (codeContentStr.includes('Si') && codeContentStr.includes('Alors'))
             );
             
-            // Handle codefr-direct blocks using the InlineCodeFRDirectBlock component
+            // Single, consolidated handler for codefr-direct blocks
             if (language === 'codefr-direct') {
-              return <InlineCodeFRDirectBlock content={reactCodeContent} />;
+              // Always use CodeFRBlock for codefr-direct blocks for consistency
+              return <CodeFRBlock>{reactCodeContent}</CodeFRBlock>;
             }
             
             // Force language to be 'codefr' if it contains CodeFR keywords
