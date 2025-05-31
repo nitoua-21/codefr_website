@@ -16,7 +16,7 @@ const DownloadSection = () => {
               <h3 className="title is-4" style={{ color: '#00458b' }}>Windows</h3>
               <p className="mb-4">Compatible avec Windows 10 et 11</p>
               <a 
-                href="https://example.com/download" 
+                href="files/CodeFrSetup.exe" 
                 className="button is-rounded" 
                 style={{ backgroundColor: '#3fd2c7', color: 'white' }}
               >
