@@ -55,7 +55,7 @@ const About = () => (
             </div>
             <div className="column is-10">
               <p className="is-size-5 mb-4" style={{ lineHeight: 1.7 }}>
-                Imaginez ceci : vous êtes dans une salle de classe de lycée en France, entouré d'élèves curieux qui débutent tout juste en programmation. Vous disposez d’un pseudocode écrit en français, mais à chaque démonstration, vous vous heurtez à un mur. Pourquoi ? Parce que les langages de programmation comme C, Python et C++ sont tous en anglais ! C’est comme essayer d’apprendre à cuisiner avec une recette dans une langue inconnue. Frustrant, non ?
+                Imaginez ceci : vous êtes dans une salle de classe de lycée dans un pays francophone, entouré d'élèves curieux qui débutent tout juste en programmation. Vous disposez d’un pseudocode écrit en français, mais à chaque démonstration, vous vous heurtez à un mur. Pourquoi ? Parce que les langages de programmation comme C, Python et C++ sont tous en anglais ! C’est comme essayer d’apprendre à cuisiner avec une recette dans une langue inconnue. Frustrant, non ?
               </p>
             </div>
           </div>
