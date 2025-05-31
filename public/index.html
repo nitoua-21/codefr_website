@@ -17,6 +17,23 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
     <title>CodeFr - Un langage de programmation en français</title>
+    <script>
+      (function() {
+        try {
+          var theme = localStorage.getItem('theme');
+          if (theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+          } else {
+            // Default to 'light' if no theme is set or localStorage is unavailable
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light'); // Optionally set it for future visits
+          }
+        } catch (e) {
+          // Fallback for environments where localStorage is not available
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
   </head>
   <body>
     <noscript>Vous devez activer JavaScript pour exécuter cette application.</noscript>

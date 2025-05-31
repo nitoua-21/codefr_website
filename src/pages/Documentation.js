@@ -429,7 +429,31 @@ const DocumentationSection = ({ section, isActive, sectionRef, theme, sidebarOpe
 
 const Documentation = () => {
   const [activeSection, setActiveSection] = useState('introduction');
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState(() => {
+    // Try to get the theme from data-theme attribute first, then localStorage, then default
+    const initialTheme = document.documentElement.getAttribute('data-theme');
+    if (initialTheme) {
+      // Ensure localStorage is also in sync if data-theme was set by the inline script
+      try {
+        if (localStorage.getItem('theme') !== initialTheme) {
+          localStorage.setItem('theme', initialTheme);
+        }
+      } catch (e) { /* ignore */ }
+      return initialTheme;
+    }
+    try {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme); // Ensure attribute is set if script missed
+        return savedTheme;
+      }
+    } catch (e) { /* ignore */ }
+    document.documentElement.setAttribute('data-theme', 'light'); // Default if nothing found
+    try {
+      localStorage.setItem('theme', 'light');
+    } catch (e) { /* ignore */ }
+    return 'light';
+  });
   const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth > 768);
   const toggleButtonRef = useRef(null);
   const sectionRefs = useRef({});
@@ -451,13 +475,7 @@ const Documentation = () => {
     }
   }, [activeSection]);
   
-  // Check for saved theme preference
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      setTheme(savedTheme);
-    }
-  }, []);
+
   
   // Listen for theme changes
   useEffect(() => {
