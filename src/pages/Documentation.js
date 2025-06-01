@@ -616,15 +616,6 @@ const Documentation = () => {
       {/* Documentation Content */}
       <div className="container mt-5">
         <div className="columns">
-          {/* Sidebar Toggle Button - New Position */}
-          <button 
-            ref={toggleButtonRef} 
-            className="button is-small sidebar-toggle"
-            onClick={toggleSidebar}
-            aria-label="Toggle sidebar"
-          >
-            {sidebarOpen ? '«' : '»'}
-          </button>
           {/* Sidebar */}
           <div className={`column is-3 sidebar ${sidebarOpen ? 'is-open' : 'is-closed'}`}>
             <aside className="menu">
@@ -662,6 +653,16 @@ const Documentation = () => {
             ))}
           </div>
         </div>
+        
+        {/* Floating Sidebar Toggle Button */}
+        <button 
+          ref={toggleButtonRef} 
+          className="button sidebar-toggle"
+          onClick={toggleSidebar}
+          aria-label="Toggle sidebar"
+        >
+          {sidebarOpen ? '«' : '»'}
+        </button>
       </div>
     </div>
   );
