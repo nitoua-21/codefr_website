@@ -17,6 +17,7 @@ const documentationSections = [
   { id: 'control', title: 'Structures de Contrôle', file: 'control.md' },
   { id: 'array', title: 'Tableaux', file: 'array.md' },
   { id: 'functions', title: 'Fonctions', file: 'functions.md' },
+  { id: 'fonctions_integrees', title: 'Fonctions Intégrées', file: 'fonctions-integrees.md' },
   { id: 'modules', title: 'Modules', file: 'modules.md' },
   { id: 'comments', title: 'Commentaires', file: 'comments.md' },
   { id: 'install_guide', title: 'Guide d\'installation et d\'utilisation', file: 'install_guide.md' }
