@@ -9,12 +9,14 @@ Ce guide vous explique comment installer, compiler et exécuter des programmes �
 
 ### Étapes :
 
-1. **Téléchargez le compilateur CodeFR** depuis le site officiel ou le dépôt GitHub.
-2. **Décompressez** l’archive si nécessaire.
-3. **Ajoutez le chemin du compilateur à votre variable d’environnement PATH** (optionnel, mais recommandé).
+1. **Téléchargez l'interpréteur [CodeFrSetup.exe](http://localhost:3000/files/CodeFrSetup.exe)** depuis le site officiel.
+2. **Exécutez le fichier téléchargé**
+3. **Suivez les instructions de l'assistant d'installation**
+4. **Une fois l'installation terminée, lancez CodeFr IDE depuis le menu Démarrer**
 
 ### Vérification de l’installation :
 
+Ouvrez un terminal et entrez la commande suivante :
 ```bash
 codefr --version
 ```
@@ -40,7 +42,7 @@ Fin
 ### Pour un fichier unique :
 
 ```bash
-./codefr mon_programme.cfr
+codefr mon_programme.cfr
 ```
 
 Cela compile et exécute le programme `mon_programme.cfr`.
@@ -48,7 +50,7 @@ Cela compile et exécute le programme `mon_programme.cfr`.
 ###  Pour plusieurs fichiers (modules + principal) :
 
 ```bash
-./codefr calculs.cfr principal.cfr
+codefr calculs.cfr principal.cfr
 ```
 
 - `calculs.cfr` : module contenant des fonctions
@@ -65,7 +67,6 @@ Les fichiers doivent être dans le **même dossier** ou bien référencés par l
 | `codefr fichier.cfr`            | Compile et exécute le fichier                   |
 | `codefr fichier1.cfr fichier2.cfr` | Compile plusieurs fichiers ensemble         |
 | `codefr --version`             | Affiche la version installée                    |
-| `codefr --help`                | Affiche l’aide sur les options disponibles      |
 
 ---
 

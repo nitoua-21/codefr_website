@@ -35,10 +35,10 @@ const DownloadSection = () => {
           <div className="content has-text-left">
             <h4 className="title is-5" style={{ color: '#3fd2c7' }}>Windows</h4>
             <ol>
-              <li>Téléchargez le fichier d'installation <code>codefr-setup.exe</code></li>
+              <li>Téléchargez le fichier d'installation <code>CodeFrSetup.exe</code></li>
               <li>Exécutez le fichier téléchargé</li>
               <li>Suivez les instructions de l'assistant d'installation</li>
-              <li>Une fois l'installation terminée, lancez CodeFr depuis le menu Démarrer</li>
+              <li>Une fois l'installation terminée, lancez <em>CodeFr IDE</em> depuis le menu Démarrer</li>
             </ol>
           </div>
         </div>
