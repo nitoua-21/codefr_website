@@ -6,7 +6,6 @@ import '../styles/Documentation.css';
 //import '../styles/prism-codefr.css';
 import '../styles/inline-code.css';
 import Prism from '../utils/prism-codefr';
-import { processCodeFRContent } from '../utils/code-utils';
 // Documentation sections metadata
 const documentationSections = [
   { id: 'introduction', title: 'Introduction', file: 'introduction.md' },
@@ -136,12 +135,6 @@ const InlineCodeFRDirectBlock = ({ content }) => {
       </pre>
     </div>
   );
-};
-
-// Regular component for directly typed codefr-direct blocks
-const CodeFRDirectBlock = ({ children }) => {
-  // This component will delegate to the inline component for consistency
-  return <InlineCodeFRDirectBlock content={children} />;
 };
 
 // Component for standard language code blocks (e.g., JS, Python)
